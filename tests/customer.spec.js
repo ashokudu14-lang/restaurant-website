@@ -118,3 +118,14 @@ test("menu error and retry recovery", async ({ page }) => {
     "online menu is coming soon",
   );
 });
+
+test("FAQ and menu guidance are available and interactive", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: "FAQs" }).click();
+  await expect(page.locator("#faq")).toBeInViewport();
+  const allergenFaq = page.locator("#faq details").filter({ hasText: "allergen information" });
+  await allergenFaq.locator("summary").click();
+  await expect(allergenFaq).toHaveAttribute("open", "");
+  await expect(allergenFaq).toContainText("confirm ingredients");
+  await expect(page.locator(".menu-note")).toContainText("allergen information");
+});
