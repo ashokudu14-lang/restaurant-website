@@ -23,8 +23,6 @@ if (!reduceMotion.matches) {
   let pointerFrame = 0;
   let pointerPoint = null;
   const resetPointer = () => {
-    hero.style.setProperty("--pointer-x", "50%");
-    hero.style.setProperty("--pointer-y", "45%");
     hero.style.setProperty("--image-x", "0px");
     hero.style.setProperty("--image-y", "0px");
     hero.style.setProperty("--label-x", "0px");
@@ -40,8 +38,6 @@ if (!reduceMotion.matches) {
       const rect = hero.getBoundingClientRect();
       const nx = Math.max(-0.5, Math.min(0.5, (pointerPoint.x - rect.left) / rect.width - 0.5));
       const ny = Math.max(-0.5, Math.min(0.5, (pointerPoint.y - rect.top) / rect.height - 0.5));
-      hero.style.setProperty("--pointer-x", `${((nx + 0.5) * 100).toFixed(1)}%`);
-      hero.style.setProperty("--pointer-y", `${((ny + 0.5) * 100).toFixed(1)}%`);
       hero.style.setProperty("--image-x", `${(-nx * 10).toFixed(1)}px`);
       hero.style.setProperty("--image-y", `${(-ny * 8).toFixed(1)}px`);
       hero.style.setProperty("--label-x", `${(nx * 9).toFixed(1)}px`);

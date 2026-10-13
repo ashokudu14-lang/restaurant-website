@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap");
 :root {
+  --ease-fluid: cubic-bezier(0.22, 1, 0.36, 1);
   font-family: "DM Sans", sans-serif;
   color: #233b30;
   background: #faf7ef;
@@ -867,30 +868,16 @@ footer > a:last-child {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  --pointer-x: 50%;
-  --pointer-y: 45%;
-}
-.hero::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: -12%;
-  pointer-events: none;
-  opacity: 0.85;
-  background:
-    radial-gradient(430px circle at var(--pointer-x) var(--pointer-y), rgba(234, 188, 96, 0.2), transparent 70%),
-    radial-gradient(620px circle at 8% 88%, rgba(165, 72, 35, 0.055), transparent 72%);
-  transition: opacity 450ms ease;
 }
 .hero-copy {
-  animation: hero-copy-in 850ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: hero-copy-in 850ms var(--ease-fluid) both;
 }
 .hero-art {
-  animation: hero-art-in 1000ms 90ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: hero-art-in 1000ms 90ms var(--ease-fluid) both;
 }
 .hero-art img {
   transform: translate3d(var(--image-x, 0px), var(--image-y, 0px), 0) scale(1.018);
-  transition: transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: transform 650ms var(--ease-fluid);
 }
 .food-label {
   translate: var(--label-x, 0px) var(--label-y, 0px);
@@ -953,7 +940,7 @@ nav a {
   align-items: center;
   padding: 9px 12px;
   border-radius: 999px;
-  transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+  transition: color 220ms ease, background-color 220ms ease, transform 220ms var(--ease-fluid);
 }
 nav a:hover {
   color: #a54823;
@@ -965,7 +952,7 @@ nav a:hover {
 .text-link,
 .order-platforms a,
 .portfolio-actions a {
-  transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
+  transition: transform 260ms var(--ease-fluid), box-shadow 260ms ease, background-color 260ms ease;
 }
 .button:hover,
 .order-platforms a:hover,
@@ -974,10 +961,10 @@ nav a:hover {
   box-shadow: 0 10px 24px rgba(32, 60, 49, 0.14);
 }
 .dish {
-  transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+  transition: transform 300ms var(--ease-fluid), box-shadow 300ms ease, border-color 300ms ease;
 }
 .dish:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
   border-color: #c4b783;
   box-shadow: 0 18px 36px rgba(35, 59, 48, 0.1);
 }
@@ -985,8 +972,8 @@ nav a:hover {
   opacity: 0;
   transform: translate3d(0, 22px, 0);
   transition:
-    opacity 680ms cubic-bezier(0.2, 0.7, 0.2, 1),
-    transform 680ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    opacity 700ms var(--ease-fluid),
+    transform 700ms var(--ease-fluid);
   transition-delay: calc(var(--reveal-index, 0) * 45ms);
 }
 .motion-ready .reveal.is-visible {
@@ -1077,7 +1064,7 @@ nav a:hover {
 }
 
 
-/* Full-bleed food photography with a readable, cursor-lit copy area. */
+/* Full-bleed food photography with a readable copy area. */
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -1089,8 +1076,6 @@ nav a:hover {
   align-items: center;
   background: #100d09;
   color: #faf7ef;
-  --pointer-x: 50%;
-  --pointer-y: 45%;
 }
 .hero::before {
   content: none;
@@ -1100,7 +1085,7 @@ nav a:hover {
   z-index: 3;
   width: min(100%, 590px);
   color: #faf7ef;
-  animation: hero-copy-in 850ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: hero-copy-in 850ms var(--ease-fluid) both;
 }
 .hero h1 {
   color: #faf7ef;
@@ -1134,7 +1119,7 @@ nav a:hover {
   inset: 0;
   overflow: hidden;
   min-width: 0;
-  animation: hero-art-in 1000ms 90ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: hero-art-in 1000ms 90ms var(--ease-fluid) both;
 }
 .hero-art::after {
   content: "";
@@ -1143,7 +1128,6 @@ nav a:hover {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(430px circle at var(--pointer-x) var(--pointer-y), rgba(234, 188, 96, 0.18), transparent 72%),
     linear-gradient(90deg, rgba(10, 8, 6, 0.92) 0%, rgba(10, 8, 6, 0.76) 34%, rgba(10, 8, 6, 0.34) 58%, rgba(10, 8, 6, 0.08) 100%),
     linear-gradient(0deg, rgba(10, 8, 6, 0.34), transparent 35%, rgba(10, 8, 6, 0.08));
 }
@@ -1158,7 +1142,7 @@ nav a:hover {
   object-position: center 49%;
   border-radius: 0;
   transform: translate3d(var(--image-x, 0px), var(--image-y, 0px), 0) scale(1.035);
-  transition: transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: transform 500ms var(--ease-fluid);
 }
 .hero-art .food-label {
   z-index: 3;
@@ -1234,7 +1218,6 @@ nav a:hover {
   }
   .hero-art::after {
     background:
-      radial-gradient(400px circle at var(--pointer-x) var(--pointer-y), rgba(234, 188, 96, 0.14), transparent 72%),
       linear-gradient(90deg, rgba(10, 8, 6, 0.9) 0%, rgba(10, 8, 6, 0.69) 54%, rgba(10, 8, 6, 0.2) 100%),
       linear-gradient(0deg, rgba(10, 8, 6, 0.44), transparent 40%);
   }

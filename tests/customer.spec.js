@@ -182,7 +182,7 @@ test("motion adds pointer-reactive hero depth and labels steam as decorative", a
   await expect(steam.locator("span")).toHaveCount(6);
   const hero = page.locator(".hero");
   await page.mouse.move(60, 140);
-  await expect.poll(() => hero.evaluate((element) => element.style.getPropertyValue("--pointer-x"))).not.toBe("");
+  await expect.poll(() => hero.evaluate((element) => element.style.getPropertyValue("--image-x"))).not.toBe("");
   await expect(hero).toHaveCSS("position", "relative");
 });
 
