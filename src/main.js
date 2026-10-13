@@ -49,7 +49,7 @@ enquiryForm.addEventListener("submit", (event) => {
     details ? `Project details: ${details}` : "",
   ].filter(Boolean);
   const url = new URL("https://wa.me/917013911661");
-  url.searchParams.set("text", lines.join("\\n"));
+  url.searchParams.set("text", lines.join("\n"));
   window.open(url.toString(), "_blank", "noopener,noreferrer");
 });
 
