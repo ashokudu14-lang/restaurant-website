@@ -1028,3 +1028,24 @@ nav a:hover {
     opacity: 0.24;
   }
 }
+
+
+/* Improve steam legibility over the warm hero illustration. */
+.steam {
+  z-index: 2;
+  filter: drop-shadow(0 0 12px rgba(255, 241, 205, 0.4));
+}
+.steam span {
+  width: 22px;
+  border-left-width: 4px;
+  border-left-color: rgba(255, 246, 228, 0.96);
+  border-radius: 60% 38% 58% 35%;
+  box-shadow: 3px 0 12px rgba(255, 239, 210, 0.38);
+  filter: blur(0.9px);
+}
+@keyframes steam-rise {
+  0% { opacity: 0; transform: translate3d(0, 17px, 0) scaleX(0.75) rotate(-8deg); }
+  22% { opacity: 0.78; }
+  78% { opacity: 0.4; }
+  100% { opacity: 0; transform: translate3d(12px, -36px, 0) scaleX(1.25) rotate(12deg); }
+}
