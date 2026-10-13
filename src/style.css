@@ -1386,8 +1386,12 @@ nav a:hover {
   letter-spacing: 0.01em;
 }
 .quick-order__action {
+  opacity: 1;
   text-decoration: none;
-  transition: color 180ms ease, background-color 180ms ease;
+  transition: opacity 180ms ease, color 180ms ease, background-color 180ms ease;
+}
+.quick-order:not(.is-open) .quick-order__action {
+  opacity: 0;
 }
 .quick-order__action:hover {
   color: #a54823;

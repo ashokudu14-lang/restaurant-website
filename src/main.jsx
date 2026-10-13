@@ -47,7 +47,7 @@ function QuickOrderMenu() {
 
   return (
     <div
-      className="quick-order"
+      className={`quick-order ${open ? "is-open" : ""}`}
       ref={menuRef}
       onKeyDown={closeOnEscape}
       role="group"
