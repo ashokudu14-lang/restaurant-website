@@ -129,3 +129,15 @@ test("FAQ and menu guidance are available and interactive", async ({ page }) => 
   await expect(allergenFaq).toContainText("confirm ingredients");
   await expect(page.locator(".menu-note")).toContainText("allergen information");
 });
+
+test("online ordering opens the restaurant's confirmed delivery listings", async ({ page }) => {
+  await page.goto("/");
+  const swiggy = page.getByRole("link", { name: "Order on Swiggy" });
+  const zomato = page.getByRole("link", { name: "Order on Zomato" });
+  await expect(swiggy).toHaveAttribute("href", "https://www.swiggy.com/city/hyderabad/new-sagar-restaurant-and-bakers-jeedimetla-suraram-rest619437");
+  await expect(zomato).toHaveAttribute("href", "https://www.zomato.com/hyderabad/new-sagar-restaurant-bakers-suraram/order");
+  for (const link of [swiggy, zomato]) {
+    await expect(link).toHaveAttribute("target", "_blank");
+    await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  }
+});
