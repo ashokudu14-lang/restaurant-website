@@ -610,3 +610,42 @@ footer > a:last-child {
 .faq-list details a {
   font-weight: 700;
 }
+
+.order-platforms {
+  max-width: 650px;
+  margin: 35px auto 0;
+  padding: 24px 20px;
+  border: 1px solid rgba(250, 247, 239, 0.28);
+  border-radius: 8px;
+}
+.order-platforms h3 {
+  margin: 0 0 8px;
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+}
+.order-platforms > p {
+  margin: 0 0 18px;
+  font-size: 14px;
+}
+.platform-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.button.order-platform {
+  color: #203c31;
+  background: #eabc60;
+  min-width: 175px;
+}
+.button.order-platform.secondary {
+  color: #faf7ef;
+  background: transparent;
+  border: 1px solid #eabc60;
+}
+@media (max-width: 600px) {
+  .platform-links {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
