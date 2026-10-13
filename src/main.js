@@ -1,0 +1,138 @@
+import "./style.css";
+const phone = "+919182774775";
+const address =
+  "02-020/NR, Gajularamaram, Circle 26, Suraram, Hyderabad, Telangana";
+const directions =
+  "https://www.google.com/maps/dir/?api=1&destination=" +
+  encodeURIComponent("New Sagar Restaurant & Bakers, " + address);
+document.querySelector("#app").innerHTML = `
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="#home"><span class="brand-icon" aria-hidden="true">✳</span><span>NEW SAGAR<small>RESTAURANT & BAKERS</small></span></a><nav aria-label="Main navigation"><a href="#menu">Menu</a><a href="#about">Our place</a><a href="#visit">Visit us</a></nav><a class="button small" href="tel:${phone}">Call to order ↗</a></header>
+<main id="main"><section id="home" class="hero"><div class="hero-copy"><p class="eyebrow">SURARAM, HYDERABAD</p><h1>Good food.<br>Great company.<br><em>Your next stop.</em></h1><p class="intro">From Hyderabadi biryani to kebabs and Chinese favourites, discover a world of flavour at New Sagar Restaurant & Bakers.</p><div class="actions"><a class="button" href="#menu">Explore the menu <span>↗</span></a><a class="text-link" href="tel:${phone}">Call to order ↗</a></div><p class="location-note">⌖ Gajularamaram · Suraram</p></div><div class="hero-art"><img id="hero-photo" src="/food-placeholder.svg" width="720" height="800" alt="Illustrated plate of food; placeholder artwork, not a restaurant photograph"><span class="photo-note">Illustration · restaurant photo coming soon</span><div class="food-label">A little spice.<br><em>A lot of flavour.</em></div></div></section>
+<div class="cuisine-strip" aria-label="Our cuisines">HYDERABADI <span>✳</span> BIRYANI <span>✳</span> NORTH INDIAN <span>✳</span> CHINESE <span>✳</span> KEBABS <span>✳</span> MUGHLAI <span>✳</span> SEAFOOD</div>
+<section id="menu" class="section"><div class="section-heading"><div><p class="eyebrow">FIND YOUR FAVOURITES</p><h2>Something for every craving.</h2></div><p>Explore the menu, then give us a call to confirm availability and place your order.</p></div><div class="menu-tools"><label class="search">Search the menu<input id="search" type="search" placeholder="Search dishes or descriptions…"></label><label>Category<select id="category"><option value="">All categories</option></select></label><label>Preference<select id="diet"><option value="">All dishes</option><option value="vegetarian">Vegetarian</option><option value="non-vegetarian">Non-vegetarian</option></select></label></div><div id="menu-status" role="status" aria-live="polite"></div><div id="menu-grid" class="menu-grid"></div><div class="menu-call"><span>Have a dish in mind?</span><a href="tel:${phone}">Call for today’s menu ↗</a></div></section>
+<section id="about" class="about section"><div><p class="eyebrow">WELCOME TO NEW SAGAR</p><h2>Your neighbourhood.<br>Your kind of flavour.</h2></div><div><p>Find us in Gajularamaram, Suraram, Hyderabad. Our cuisines span North Indian, Chinese, kebabs, Mughlai, biryani, Hyderabadi and seafood.</p><p>Planning a visit or picking up a meal? Call our team for the current menu, opening hours and service options.</p><a class="text-link" href="#visit">Come find us ↗</a></div></section>
+<section id="visit" class="section visit"><div><p class="eyebrow">MAKE YOUR WAY HERE</p><h2>See you in Suraram.</h2><address>${address}</address><div class="visit-details"><div><h3>Opening hours</h3><p id="hours">Please call to confirm current opening hours.</p></div><div><h3>Dine-in & takeaway</h3><p id="services">Please call to confirm available service options.</p></div></div><div class="actions"><a class="button" href="${directions}" target="_blank" rel="noopener noreferrer">Get directions ↗</a><a class="text-link" href="tel:${phone}">+91 91827 74775</a></div></div><div class="map-card"><span aria-hidden="true">⌖</span><p>GAJULARAMARAM</p><h3>Good food is<br>closer than you think.</h3><p>Circle 26 · Suraram · Hyderabad</p><a href="${directions}" target="_blank" rel="noopener noreferrer">Open in Google Maps ↗</a></div></section>
+<section id="contact" class="contact section"><p class="eyebrow">LET’S TALK FOOD</p><h2>Your next meal starts<br>with a hello.</h2><p>Call the restaurant to ask about the menu and place an order.</p><div class="actions"><a class="button light" href="tel:${phone}">Call to order ↗</a><a id="whatsapp" class="text-link" href="https://wa.me/919182774775?text=Hello%2C%20is%20this%20New%20Sagar%20Restaurant%20%26%20Bakers%3F" target="_blank" rel="noopener noreferrer">Try WhatsApp ↗</a></div><p id="whatsapp-note" class="fine">WhatsApp availability on this number has not been confirmed. Call for a reliable response.</p><div id="online-order"></div></section></main>
+<footer><a class="brand" href="#home">NEW SAGAR<small>RESTAURANT & BAKERS</small></a><p>Gajularamaram, Suraram · Hyderabad</p><a href="tel:${phone}">+91 91827 74775</a></footer><div class="mobile-bar"><a href="#menu">View menu</a><a href="tel:${phone}">Call to order ↗</a></div>`;
+let items = [];
+const status = document.querySelector("#menu-status"),
+  grid = document.querySelector("#menu-grid");
+const escapeHTML = (s) =>
+  String(s ?? "").replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
+  );
+const safeUrl = (value) => {
+  try {
+    const u = new URL(value);
+    return u.protocol === "https:" ? u.href : null;
+  } catch {
+    return null;
+  }
+};
+function render() {
+  const q = document.querySelector("#search").value.trim().toLowerCase(),
+    cat = document.querySelector("#category").value,
+    diet = document.querySelector("#diet").value;
+  const filtered = items.filter(
+    (i) =>
+      (!q ||
+        `${i.name} ${i.description ?? ""} ${i.category}`
+          .toLowerCase()
+          .includes(q)) &&
+      (!cat || i.category === cat) &&
+      (!diet || i.diet === diet),
+  );
+  grid.innerHTML = filtered
+    .map(
+      (i) =>
+        `<article class="dish">${safeUrl(i.photo_url) ? `<img src="${escapeHTML(safeUrl(i.photo_url))}" alt="${escapeHTML(i.name)}" loading="lazy" width="400" height="240">` : ""}<div class="dish-content"><p class="dish-category">${escapeHTML(i.category)}</p><h3>${escapeHTML(i.name)}</h3><p>${escapeHTML(i.description || "")}</p><div class="dish-meta"><span>${escapeHTML(i.diet === "vegetarian" ? "● Vegetarian" : i.diet === "non-vegetarian" ? "● Non-vegetarian" : "Dietary details: ask us")}</span><strong>${i.price == null ? "Call for price" : new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 2 }).format(i.price)}</strong></div><p class="availability ${i.available ? "" : "unavailable"}">${i.available ? "Available · confirm when ordering" : "Currently unavailable"}</p></div></article>`,
+    )
+    .join("");
+  status.textContent = filtered.length
+    ? `${filtered.length} ${filtered.length === 1 ? "dish" : "dishes"}`
+    : items.length
+      ? "No dishes match your search. Try another search or category."
+      : "Our online menu is coming soon. Call +91 91827 74775 for current dishes, prices and availability.";
+}
+async function loadMenu() {
+  const url = import.meta.env.VITE_SUPABASE_URL,
+    key = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  if (!url || !key) {
+    render();
+    return;
+  }
+  if (!items.length) status.textContent = "Loading menu…";
+  try {
+    const res = await fetch(
+      `${url.replace(/\/$/, "")}/rest/v1/menu_items?select=*&published=eq.true&order=sort_order.asc,name.asc`,
+      {
+        headers: { apikey: key, Authorization: `Bearer ${key}` },
+        signal: AbortSignal.timeout(10000),
+      },
+    );
+    if (!res.ok) throw Error("Menu unavailable");
+    const data = await res.json();
+    if (!Array.isArray(data)) throw Error("Invalid menu");
+    items = data;
+    const select = document.querySelector("#category"),
+      selected = select.value;
+    select.innerHTML =
+      '<option value="">All categories</option>' +
+      [...new Set(items.map((i) => i.category))]
+        .sort()
+        .map(
+          (c) => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`,
+        )
+        .join("");
+    if ([...select.options].some((o) => o.value === selected))
+      select.value = selected;
+    render();
+  } catch {
+    status.innerHTML =
+      'The live menu could not be refreshed. Please call for current availability. <button id="retry" type="button">Try again</button>';
+    document.querySelector("#retry").onclick = loadMenu;
+  }
+}
+for (const id of ["search", "category", "diet"])
+  document.querySelector("#" + id).addEventListener("input", render);
+loadMenu();
+setInterval(() => {
+  if (!document.hidden) loadMenu();
+}, 15000);
+fetch("/business.json")
+  .then((r) => {
+    if (!r.ok) throw Error();
+    return r.json();
+  })
+  .then((b) => {
+    if (b.hours) document.querySelector("#hours").textContent = b.hours;
+    if (b.serviceDetails)
+      document.querySelector("#services").textContent = b.serviceDetails;
+    if (b.whatsappConfirmed) {
+      document.querySelector("#whatsapp").textContent = "WhatsApp us ↗";
+      document.querySelector("#whatsapp-note").textContent =
+        "Contact the restaurant on WhatsApp to discuss your order.";
+    }
+    const order = safeUrl(b.onlineOrderingUrl);
+    if (order) {
+      const a = document.createElement("a");
+      a.href = order;
+      a.textContent = "Order through our ordering partner ↗";
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      document.querySelector("#online-order").append(a);
+    }
+    const photo = safeUrl(b.heroPhotoUrl);
+    if (photo) {
+      document.querySelector("#hero-photo").src = photo;
+      document.querySelector("#hero-photo").alt =
+        "New Sagar Restaurant & Bakers";
+      document.querySelector(".photo-note").hidden = true;
+    }
+  })
+  .catch(() => {});
