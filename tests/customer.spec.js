@@ -179,7 +179,7 @@ test("motion adds pointer-reactive hero depth and labels steam as decorative", a
   await expect(photo).toHaveAttribute("src", "/biryani-hero.jpg");
   await expect.poll(() => photo.evaluate((image) => image.naturalWidth)).toBeGreaterThan(1000);
   await expect(steam).toHaveAttribute("aria-hidden", "true");
-  await expect(steam.locator("span")).toHaveCount(3);
+  await expect(steam.locator("span")).toHaveCount(6);
   const hero = page.locator(".hero");
   await page.mouse.move(60, 140);
   await expect.poll(() => hero.evaluate((element) => element.style.getPropertyValue("--pointer-x"))).not.toBe("");
