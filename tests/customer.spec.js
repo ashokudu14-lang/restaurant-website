@@ -175,6 +175,9 @@ test("project enquiry opens a prefilled WhatsApp message", async ({ page }) => {
 test("motion adds pointer-reactive hero depth and labels steam as decorative", async ({ page }) => {
   await page.goto("/");
   const steam = page.locator(".steam");
+  const photo = page.locator("#hero-photo");
+  await expect(photo).toHaveAttribute("src", "/biryani-hero.jpg");
+  await expect.poll(() => photo.evaluate((image) => image.naturalWidth)).toBeGreaterThan(1000);
   await expect(steam).toHaveAttribute("aria-hidden", "true");
   await expect(steam.locator("span")).toHaveCount(3);
   const hero = page.locator(".hero");
