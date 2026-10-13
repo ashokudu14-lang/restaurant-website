@@ -151,3 +151,22 @@ test("order links sit beside the menu and the portfolio pitch is disclosed", asy
   await expect(pitch).toContainText("Independent portfolio concept by Ashok");
   await expect(pitch.getByRole("link", { name: "View GitHub" })).toHaveAttribute("href", "https://github.com/ashokudu14-lang/restaurant-website");
 });
+
+test("project enquiry opens a prefilled WhatsApp message", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator('a[href="mailto:ashokudu.14@gmail.com"]')).toBeVisible();
+  await expect(page.locator('#project-enquiry a[href^="https://wa.me/917013911661"]')).toBeVisible();
+  await page.getByLabel("Your name").fill("Sample Visitor");
+  await page.getByLabel("Your email").fill("visitor@example.com");
+  await page.getByLabel("Your goal").selectOption({ label: "Restaurant website" });
+  await page.getByLabel("Project details").fill("Need a responsive menu website.");
+  const popupPromise = page.waitForEvent("popup");
+  await page.getByRole("button", { name: "Continue on WhatsApp" }).click();
+  const popup = await popupPromise;
+  await expect(popup).toHaveURL(/wa\.me\/917013911661/);
+  const message = new URL(popup.url()).searchParams.get("text");
+  expect(message).toContain("Sample Visitor");
+  expect(message).toContain("visitor@example.com");
+  expect(message).toContain("Restaurant website");
+  await popup.close();
+});
