@@ -170,3 +170,24 @@ test("project enquiry opens a prefilled WhatsApp message", async ({ page }) => {
   expect(message).toContain("Restaurant website");
   await popup.close();
 });
+
+
+test("motion adds pointer-reactive hero depth and labels steam as decorative", async ({ page }) => {
+  await page.goto("/");
+  const steam = page.locator(".steam");
+  await expect(steam).toHaveAttribute("aria-hidden", "true");
+  await expect(steam.locator("span")).toHaveCount(3);
+  const hero = page.locator(".hero");
+  await page.mouse.move(60, 140);
+  await expect.poll(() => hero.evaluate((element) => element.style.getPropertyValue("--pointer-x"))).not.toBe("");
+  await expect(hero).toHaveCSS("position", "relative");
+});
+
+test("reduced-motion preference disables long running motion", async ({ browser }) => {
+  const context = await browser.newContext({ reducedMotion: "reduce" });
+  const page = await context.newPage();
+  await page.goto("/");
+  const duration = await page.locator(".steam span").first().evaluate((element) => getComputedStyle(element).animationDuration);
+  expect(parseFloat(duration)).toBeLessThan(0.001);
+  await context.close();
+});
