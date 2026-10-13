@@ -1049,3 +1049,29 @@ nav a:hover {
   78% { opacity: 0.4; }
   100% { opacity: 0; transform: translate3d(12px, -36px, 0) scaleX(1.25) rotate(12deg); }
 }
+
+
+/* Let the steam read clearly even at normal hero viewing size. */
+.steam {
+  top: 18%;
+}
+.steam span {
+  width: 27px;
+  height: 88px;
+  border-left-width: 5px;
+  border-left-color: rgba(255, 248, 232, 0.98);
+  box-shadow: 0 0 16px 4px rgba(255, 242, 216, 0.56);
+  filter: blur(0.55px);
+}
+.steam span:nth-child(2) {
+  height: 72px;
+}
+.steam span:nth-child(3) {
+  height: 80px;
+}
+@keyframes steam-rise {
+  0% { opacity: 0; transform: translate3d(0, 20px, 0) scaleX(0.72) rotate(-9deg); }
+  22% { opacity: 0.94; }
+  78% { opacity: 0.58; }
+  100% { opacity: 0; transform: translate3d(15px, -62px, 0) scaleX(1.3) rotate(13deg); }
+}
