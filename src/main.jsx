@@ -39,6 +39,11 @@ function QuickOrderMenu() {
     return () => document.removeEventListener("pointerdown", closeOutside);
   }, [open]);
 
+  useEffect(() => {
+    document.body.classList.toggle("quick-order-open", open);
+    return () => document.body.classList.remove("quick-order-open");
+  }, [open]);
+
   const closeOnEscape = (event) => {
     if (event.key !== "Escape" || !open) return;
     setOpen(false);

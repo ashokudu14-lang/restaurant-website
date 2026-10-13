@@ -1418,3 +1418,10 @@ nav a:hover {
     transition: none;
   }
 }
+
+body .food-label {
+  transition: opacity 220ms ease;
+}
+body.quick-order-open .food-label {
+  opacity: 0;
+}
