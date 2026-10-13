@@ -141,3 +141,13 @@ test("online ordering opens the restaurant's confirmed delivery listings", async
     await expect(link).toHaveAttribute("rel", "noopener noreferrer");
   }
 });
+
+test("order links sit beside the menu and the portfolio pitch is disclosed", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("#menu .order-platforms")).toHaveCount(1);
+  await expect(page.locator("#contact .order-platforms")).toHaveCount(0);
+  const pitch = page.locator("#website-services");
+  await expect(pitch.getByRole("heading", { name: /Need a website like this/ })).toBeVisible();
+  await expect(pitch).toContainText("Independent portfolio concept by Ashok");
+  await expect(pitch.getByRole("link", { name: "View GitHub" })).toHaveAttribute("href", "https://github.com/ashokudu14-lang/restaurant-website");
+});
