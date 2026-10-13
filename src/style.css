@@ -749,3 +749,114 @@ footer > a:last-child {
     flex-direction: column;
   }
 }
+
+.project-enquiry {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 8%;
+  margin-top: 82px;
+  padding-top: 55px;
+  border-top: 1px solid rgba(250, 247, 239, 0.25);
+}
+.enquiry-intro .eyebrow {
+  color: #d6c696;
+}
+.enquiry-intro h3 {
+  margin: 14px 0 20px;
+  font: 600 clamp(38px, 5.5vw, 64px)/1 "Playfair Display", serif;
+  letter-spacing: -0.04em;
+}
+.enquiry-intro h3 em {
+  color: #eabc60;
+}
+.enquiry-intro > p:not(.eyebrow) {
+  max-width: 390px;
+  color: #d8dfd6;
+  line-height: 1.7;
+}
+.enquiry-contact {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  margin-top: 26px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.enquiry-contact a {
+  color: #faf7ef;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.enquiry-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 16px;
+  align-content: start;
+}
+.enquiry-form label {
+  display: grid;
+  gap: 9px;
+  color: #d6c696;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.enquiry-form input,
+.enquiry-form select,
+.enquiry-form textarea {
+  width: 100%;
+  border: 1px solid rgba(250, 247, 239, 0.28);
+  border-radius: 3px;
+  padding: 15px 16px;
+  background: #192d24;
+  color: #faf7ef;
+  font-size: 14px;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.enquiry-form input::placeholder,
+.enquiry-form textarea::placeholder {
+  color: #aeb9ae;
+}
+.enquiry-form select:invalid {
+  color: #aeb9ae;
+}
+.enquiry-form textarea {
+  resize: vertical;
+  min-height: 115px;
+}
+.field-wide {
+  grid-column: 1 / -1;
+}
+.enquiry-form .button {
+  justify-self: start;
+  border: 0;
+  cursor: pointer;
+}
+.form-note {
+  margin: -5px 0 0;
+  color: #b8c1b8;
+  font-size: 12px;
+  line-height: 1.6;
+}
+@media (max-width: 850px) {
+  .project-enquiry {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+@media (max-width: 600px) {
+  .project-enquiry {
+    margin-top: 60px;
+    padding-top: 40px;
+  }
+  .enquiry-form {
+    grid-template-columns: 1fr;
+  }
+  .field-wide {
+    grid-column: auto;
+  }
+  .enquiry-form .button {
+    justify-self: stretch;
+  }
+}
