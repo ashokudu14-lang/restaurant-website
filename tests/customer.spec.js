@@ -186,6 +186,25 @@ test("motion adds pointer-reactive hero depth and labels steam as decorative", a
   await expect(hero).toHaveCSS("position", "relative");
 });
 
+
+test("React Gooey quick-order menu exposes working call and delivery actions", async ({ page }) => {
+  await page.goto("/");
+  const toggle = page.getByRole("button", { name: "Open quick order options" });
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await toggle.click();
+  const close = page.getByRole("button", { name: "Close quick order options" });
+  await expect(close).toHaveAttribute("aria-expanded", "true");
+
+  const call = page.getByRole("link", { name: "Call New Sagar" });
+  const swiggy = page.getByRole("link", { name: "Order on Swiggy" });
+  const zomato = page.getByRole("link", { name: "Order on Zomato" });
+  await expect(call).toHaveAttribute("href", "tel:+919182774775");
+  await expect(swiggy).toHaveAttribute("target", "_blank");
+  await expect(zomato).toHaveAttribute("target", "_blank");
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Open quick order options" })).toHaveAttribute("aria-expanded", "false");
+});
+
 test("reduced-motion preference disables long running motion", async ({ browser }) => {
   const context = await browser.newContext({ reducedMotion: "reduce" });
   const page = await context.newPage();

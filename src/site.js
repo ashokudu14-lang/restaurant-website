@@ -1,11 +1,11 @@
-import "./style.css";
+export function mountRestaurantSite() {
 const phone = "+919182774775";
 const address =
   "02-020/NR, Gajularamaram, Circle 26, Suraram, Hyderabad, Telangana";
 const directions =
   "https://www.google.com/maps/dir/?api=1&destination=" +
   encodeURIComponent("New Sagar Restaurant & Bakers, " + address);
-document.querySelector("#app").innerHTML = `
+document.querySelector("#restaurant-content").innerHTML = `
 <a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="#home"><span class="brand-icon" aria-hidden="true">✳</span><span>NEW SAGAR<small>RESTAURANT & BAKERS</small></span></a><nav aria-label="Main navigation"><a href="#menu">Menu</a><a href="#about">Our place</a><a href="#visit">Visit us</a><a href="#faq">FAQs</a></nav><a class="button small" href="tel:${phone}">Call to order ↗</a></header>
 <main id="main"><section id="home" class="hero"><div class="hero-copy"><p class="eyebrow">SURARAM, HYDERABAD</p><h1>Good food.<br>Great company.<br><em>Your next stop.</em></h1><p class="intro">From Hyderabadi biryani to kebabs and Chinese favourites, discover a world of flavour at New Sagar Restaurant & Bakers.</p><div class="actions"><a class="button" href="#menu">Explore the menu <span>↗</span></a><a class="text-link" href="tel:${phone}">Call to order ↗</a></div><p class="location-note">⌖ Gajularamaram · Suraram</p></div><div class="hero-art"><img id="hero-photo" src="/biryani-hero.jpg" width="1440" height="810" alt="Fresh Hyderabadi chicken biryani served in a copper handi with aromatic smoke rising" fetchpriority="high" decoding="async"><div class="steam" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="food-label">A little spice.<br><em>A lot of flavour.</em></div></div></section>
@@ -185,7 +185,7 @@ async function loadMenu() {
 for (const id of ["search", "category", "diet"])
   document.querySelector("#" + id).addEventListener("input", render);
 loadMenu();
-setInterval(() => {
+const menuRefreshTimer = window.setInterval(() => {
   if (!document.hidden) loadMenu();
 }, 15000);
 fetch("/business.json")
@@ -219,3 +219,6 @@ fetch("/business.json")
     }
   })
   .catch(() => {});
+
+  return () => window.clearInterval(menuRefreshTimer);
+}
